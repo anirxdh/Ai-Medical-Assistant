@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "==2.3.3"
+flask-cors = "==4.0.0"
+openai = "==0.28.1"
+pinecone-client = "==2.2.4"
+langchain = "==0.0.348"
+gtts = "==2.4.0"
+python-dotenv = "==1.0.0"
+requests = "==2.31.0"
+numpy = "==1.24.3"
+pandas = "==2.0.3"
+tiktoken = "==0.5.1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.0"

@@ -1,0 +1,500 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App-header {
+  padding: 2rem 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.App-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.App-header p {
+  margin: 0;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  color: #cccccc;
+}
+
+.App-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Conversation Section */
+.conversation-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Conversation Control */
+.conversation-control {
+  margin-bottom: 2rem;
+}
+
+.start-conversation-btn, .stop-conversation-btn {
+  background: linear-gradient(45deg, #4a4a4a, #2d2d2d);
+  border: 2px solid #666666;
+  color: white;
+  font-size: 1.8rem;
+  padding: 1.5rem 3rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.stop-conversation-btn {
+  background: linear-gradient(45deg, #666666, #333333);
+  border: 2px solid #888888;
+}
+
+.start-conversation-btn:hover, .stop-conversation-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  border-color: #ffffff;
+}
+
+.stop-conversation-btn:hover {
+  background: linear-gradient(45deg, #777777, #444444);
+}
+
+/* Status Display */
+.status-display {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-display.listening {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.status-display.processing {
+  background: rgba(128, 128, 128, 0.1);
+  border: 2px solid rgba(160, 160, 160, 0.4);
+  box-shadow: 0 0 20px rgba(128, 128, 128, 0.1);
+}
+
+.status-display.speaking {
+  background: rgba(200, 200, 200, 0.1);
+  border: 2px solid rgba(220, 220, 220, 0.4);
+  box-shadow: 0 0 20px rgba(200, 200, 200, 0.1);
+}
+
+/* Listening Indicator */
+.listening-indicator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pulse-ring {
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  animation: pulsate 2s ease-out infinite;
+}
+
+.pulse-ring:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.pulse-ring:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+.pulse-ring:nth-child(3) {
+  animation-delay: 1.4s;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0.0;
+  }
+  50% {
+    opacity: 1.0;
+  }
+  100% {
+    transform: scale(1.5, 1.5);
+    opacity: 0.0;
+  }
+}
+
+.listening-indicator span,
+.processing-indicator span,
+.speaking-indicator span {
+  font-size: 1.3rem;
+  font-weight: 600;
+  z-index: 10;
+  margin-top: 80px;
+  color: #ffffff;
+}
+
+/* Processing Indicator */
+.processing-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(128, 128, 128, 0.3);
+  border-left: 5px solid #cccccc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Speaking Indicator */
+.speaking-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.audio-wave {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #cccccc, #999999);
+  border-radius: 50%;
+  animation: audioWave 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes audioWave {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Current Response */
+.current-response {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  text-align: left;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.current-response.thinking {
+  background: rgba(128, 128, 128, 0.1);
+  border-left: 4px solid #cccccc;
+}
+
+.current-response.thinking p {
+  font-style: italic;
+  animation: fadeInOut 2s infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.current-response p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+/* Conversation History */
+.conversation-history {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: left;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.conversation-history h3 {
+  margin: 0 0 1rem 0;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.history-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  position: relative;
+}
+
+.message.user {
+  background: rgba(255, 255, 255, 0.1);
+  align-self: flex-end;
+  margin-left: 20%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.message.assistant {
+  background: rgba(128, 128, 128, 0.1);
+  align-self: flex-start;
+  margin-right: 20%;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.message-type {
+  font-weight: 600;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  color: #cccccc;
+}
+
+.message-content {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.message-time {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  align-self: flex-end;
+  color: #999999;
+}
+
+/* Error Display */
+.error {
+  background: rgba(128, 128, 128, 0.2);
+  border-left: 4px solid #cccccc;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.error h3 {
+  margin: 0 0 1rem 0;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.error p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #cccccc;
+}
+
+/* Instructions */
+.instructions {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: left;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instructions h3 {
+  margin: 0 0 1rem 0;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.instructions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.instructions li {
+  margin: 0.8rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #cccccc;
+}
+
+/* Patient Details Section */
+.patient-details {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: left;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.patient-details h3 {
+  margin: 0 0 1.5rem 0;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.patient-card {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.patient-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.patient-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.patient-info {
+  font-size: 0.9rem;
+  color: #cccccc;
+  line-height: 1.4;
+}
+
+.patient-condition {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin: 0.2rem 0.2rem 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App-main {
+    padding: 0 1rem;
+  }
+  
+  .conversation-section, .instructions, .patient-details {
+    padding: 1.5rem;
+  }
+  
+  .App-header h1 {
+    font-size: 2rem;
+  }
+  
+  .start-conversation-btn, .stop-conversation-btn {
+    font-size: 1.4rem;
+    padding: 1.2rem 2rem;
+  }
+  
+  .message.user {
+    margin-left: 10%;
+  }
+  
+  .message.assistant {
+    margin-right: 10%;
+  }
+  
+  .patient-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Focus styles for accessibility */
+.start-conversation-btn:focus, .stop-conversation-btn:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for conversation history */
+.conversation-history {
+  scroll-behavior: smooth;
+}
+
+/* Loading state */
+.conversation-section.processing {
+  opacity: 0.8;
+}
+
+/* Conversation flow animations */
+.message {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
