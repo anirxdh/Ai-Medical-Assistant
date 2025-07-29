@@ -38,6 +38,11 @@ const App = () => {
   useEffect(() => {
     checkBackendHealth();
     
+    // Set up periodic check to ensure conversation continues
+    const conversationCheckInterval = setInterval(() => {
+      ensureContinuousListening();
+    }, 3000); // Check every 3 seconds
+    
     return () => {
       if (animationFrame.current) {
         cancelAnimationFrame(animationFrame.current);
@@ -45,8 +50,9 @@ const App = () => {
       if (silenceTimer) {
         clearTimeout(silenceTimer);
       }
+      clearInterval(conversationCheckInterval);
     };
-  }, []);
+  }, [isConversationActive, isListening, isProcessing, isSpeaking]);
 
   const checkBackendHealth = async () => {
     try {
@@ -58,7 +64,14 @@ const App = () => {
   };
 
   const detectSilence = useCallback(() => {
-    if (!analyser.current || !isListening || !dataArray.current) return;
+    if (!analyser.current || !isListening || !dataArray.current) {
+      console.log('detectSilence: Missing required components', {
+        analyser: !!analyser.current,
+        isListening,
+        dataArray: !!dataArray.current
+      });
+      return;
+    }
     
     analyser.current.getByteFrequencyData(dataArray.current);
     
@@ -78,6 +91,7 @@ const App = () => {
         const timer = setTimeout(() => {
           console.log('Silence timeout reached, stopping listening');
           if (isListening && mediaRecorder && mediaRecorder.state === 'recording') {
+            console.log('Stopping recording due to silence');
             stopListening();
           }
         }, SILENCE_DURATION);
@@ -95,7 +109,7 @@ const App = () => {
     if (isListening) {
       animationFrame.current = requestAnimationFrame(detectSilence);
     }
-  }, [isListening, mediaRecorder, silenceTimer, SILENCE_THRESHOLD, SILENCE_DURATION]);
+  }, [isListening, mediaRecorder, silenceTimer]);
 
   const startConversation = async () => {
     try {
@@ -147,6 +161,11 @@ const App = () => {
       
       // Generate greeting message
       const greetingText = "Hello! I'm your medical assistant. I can help you find patient information. What would you like to know?";
+      
+      // Add greeting to conversation history immediately
+      setConversationHistory(prev => [...prev, 
+        { type: 'assistant', content: greetingText, timestamp: new Date() }
+      ]);
       
       // Convert greeting to speech
       const response = await axios.post('/api/test-tts', { text: greetingText }, {
@@ -213,37 +232,16 @@ const App = () => {
       responseAudioRef.current.currentTime = 0;
     }
     
-    setResponse("Conversation paused. Click below to continue with full memory of our previous discussion.");
+    setResponse("Conversation paused. Click below to continue.");
   };
 
   const continueConversation = async () => {
     try {
       setIsConversationActive(true);
-      setResponse('🎤 Continuing conversation...');
+      setResponse('🎧 Listening...');
       
-      // Continue conversation message
-      const continueText = "I'm back and ready to help. I remember our previous conversation. What else would you like to know?";
-      
-      // Convert to speech
-      const response = await axios.post('/api/test-tts', { text: continueText }, {
-        responseType: 'blob',
-        timeout: 10000
-      });
-      
-      if (response.data && responseAudioRef.current) {
-        setIsSpeaking(true);
-        setResponse('🔊 Ready to continue...');
-        const audioUrl = URL.createObjectURL(response.data);
-        responseAudioRef.current.src = audioUrl;
-        responseAudioRef.current.play();
-        // onAudioEnded will start listening automatically
-      } else {
-        // If TTS fails, just start listening
-        setTimeout(() => {
-          setResponse('🎧 Listening...');
-          startListening();
-        }, 1000);
-      }
+      // Start listening immediately without any greeting
+      startListening();
       
     } catch (error) {
       console.error('Error continuing conversation:', error);
@@ -256,7 +254,11 @@ const App = () => {
   };
 
   const startListening = async () => {
-    if (!isConversationActive || isProcessing || isListening) return;
+    console.log('startListening called', { isConversationActive, isProcessing, isListening });
+    if (!isConversationActive || isProcessing || isListening) {
+      console.log('startListening: Early return due to state', { isConversationActive, isProcessing, isListening });
+      return;
+    }
     
     try {
       console.log('Starting to listen...');
@@ -327,22 +329,38 @@ const App = () => {
   };
 
   const stopListening = () => {
+    console.log('stopListening called', { 
+      mediaRecorder: !!mediaRecorder, 
+      state: mediaRecorder?.state,
+      isListening 
+    });
+    
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      console.log('Stopping media recorder');
       mediaRecorder.stop();
       setIsListening(false);
       
       if (silenceTimer) {
+        console.log('Clearing silence timer');
         clearTimeout(silenceTimer);
         setSilenceTimer(null);
       }
       
       if (animationFrame.current) {
+        console.log('Cancelling animation frame');
         cancelAnimationFrame(animationFrame.current);
       }
+    } else {
+      console.log('stopListening: No active media recorder to stop');
     }
   };
 
   const sendAudioToBackend = async () => {
+    console.log('sendAudioToBackend called', { 
+      audioChunksLength: audioChunks.current.length,
+      isConversationActive 
+    });
+    
     if (audioChunks.current.length === 0) {
       console.log('No audio recorded, restarting listening...');
       if (isConversationActive) {
@@ -374,29 +392,46 @@ const App = () => {
 
       console.log('Sending audio to backend...');
       
+      // Get both transcription and response in one call
       const response = await axios.post('/api/ask', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        responseType: 'blob',
+        responseType: 'json',
         timeout: 30000
       });
 
       clearInterval(thinkingInterval);
       setIsThinking(false);
       
-      // Add user message to conversation history
+      // Extract the response data
+      const { transcribed_text, medical_response } = response.data;
+      
+      // Add user message to conversation history with transcribed text
       setConversationHistory(prev => [...prev, 
-        { type: 'user', content: 'Voice message', timestamp: new Date() }
+        { type: 'user', content: transcribed_text, timestamp: new Date() }
       ]);
       
-      // Create audio URL and play response
-      const audioUrl = URL.createObjectURL(response.data);
-      if (responseAudioRef.current) {
+      // Add assistant response to conversation history with actual medical response
+      setConversationHistory(prev => [...prev, 
+        { type: 'assistant', content: medical_response, timestamp: new Date() }
+      ]);
+      
+      // Convert medical response to speech
+      const audioResponse = await textToSpeechLocally(medical_response);
+      if (audioResponse && responseAudioRef.current) {
+        console.log('Playing audio response');
         setIsSpeaking(true);
         setResponse('Speaking...');
+        const audioUrl = URL.createObjectURL(audioResponse);
         responseAudioRef.current.src = audioUrl;
         responseAudioRef.current.play();
+      } else {
+        console.log('No audio response, continuing conversation');
+        // If no audio, just continue listening
+        setTimeout(() => {
+          onAudioEnded();
+        }, 1000);
       }
       
     } catch (error) {
@@ -428,22 +463,39 @@ const App = () => {
   };
 
   const onAudioEnded = () => {
+    console.log('onAudioEnded called', { isConversationActive, isSpeaking });
     setIsSpeaking(false);
-    
-    // Add AI response to conversation history
-    setConversationHistory(prev => [...prev, 
-      { type: 'assistant', content: 'Audio response', timestamp: new Date() }
-    ]);
     
     // Always continue listening if conversation is active
     if (isConversationActive) {
+      console.log('Conversation is active, restarting listening');
       setResponse('🎧 Listening...');
       // Automatically restart listening after AI finishes speaking
       setTimeout(() => {
+        console.log('Timeout reached, calling startListening');
         startListening();
       }, 800);
     } else {
+      console.log('Conversation is not active, stopping');
       setResponse('Conversation stopped.');
+    }
+  };
+
+  // Add a backup mechanism to ensure conversation continues
+  const ensureContinuousListening = () => {
+    console.log('ensureContinuousListening called', { 
+      isConversationActive, 
+      isListening, 
+      isProcessing, 
+      isSpeaking 
+    });
+    
+    if (isConversationActive && !isListening && !isProcessing && !isSpeaking) {
+      console.log('Detected conversation should be listening but is not - restarting');
+      setResponse('🎧 Listening...');
+      setTimeout(() => {
+        startListening();
+      }, 500);
     }
   };
 
@@ -468,9 +520,21 @@ const App = () => {
                 🔄 Continue Conversation
               </button>
             ) : (
-              <button onClick={stopConversation} className="stop-conversation-btn">
-                ⏸️ Pause Conversation
-              </button>
+              <div>
+                <button onClick={stopConversation} className="stop-conversation-btn">
+                  ⏸️ Pause Conversation
+                </button>
+                {isListening && (
+                  <button onClick={stopListening} className="stop-listening-btn" style={{marginLeft: '10px', backgroundColor: '#ff4444'}}>
+                    🛑 Stop Listening (Debug)
+                  </button>
+                )}
+                {isConversationActive && !isListening && !isProcessing && (
+                  <button onClick={startListening} className="force-listen-btn" style={{marginLeft: '10px', backgroundColor: '#44ff44'}}>
+                    🎧 Force Listen (Debug)
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
