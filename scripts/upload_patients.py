@@ -121,7 +121,7 @@ def test_retrieval(vectorstore):
     print("\nTesting retrieval...")
     
     test_queries = [
-        "Tell me about John Doe",
+        "Tell me about Emily Rivera",
         "Who has diabetes?",
         "Which patients are on blood pressure medication?",
         "Show me heart failure patients"
@@ -143,6 +143,7 @@ def main():
     print("Starting Pinecone upload process...")
     
     # Load environment variables
+    
     load_environment()
     
     # Initialize Pinecone

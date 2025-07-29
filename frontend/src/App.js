@@ -517,7 +517,7 @@ const App = () => {
               </button>
             ) : !isConversationActive ? (
               <button onClick={continueConversation} className="start-conversation-btn">
-                🔄 Continue Conversation
+                 Continue Conversation
               </button>
             ) : (
               <div>
@@ -606,7 +606,7 @@ const App = () => {
             <li>The AI will greet you first, then you can respond naturally</li>
             <li>Speak when you see "🎧 Listening..." - it detects when you stop talking (1-second pause)</li>
             <li>The conversation flows continuously with memory of all previous exchanges</li>
-            <li>Ask about patients like: "Tell me about John Doe" or "Who has diabetes?"</li>
+            <li>Ask about patients like: "Tell me about Rivera " or "Who has diabetes?"</li>
             <li>Click "⏸️ Pause" to stop temporarily - use "🔄 Continue" to resume with full memory</li>
           </ul>
         </div>
@@ -615,63 +615,59 @@ const App = () => {
           <h3>Available Patient Records</h3>
           <div className="patient-grid">
             <div className="patient-card">
-              <div className="patient-name">John Doe (45, Male)</div>
+              <div className="patient-name">Emily Rivera (29, Female)</div>
               <div className="patient-info">
-                <div className="patient-condition">Hypertension</div>
-                <p><strong>Last Visit:</strong> July 10, 2024</p>
-                <p><strong>Medications:</strong> Amlodipine 5mg, Lisinopril 10mg</p>
-                <p><strong>BP:</strong> 140/90 mmHg | <strong>Cholesterol:</strong> 220 mg/dL</p>
-                <p><strong>Allergies:</strong> Penicillin</p>
-              </div>
-            </div>
-
-            <div className="patient-card">
-              <div className="patient-name">Sarah Smith (32, Female)</div>
-              <div className="patient-info">
-                <div className="patient-condition">Type 2 Diabetes</div>
-                <div className="patient-condition">Obesity</div>
-                <p><strong>Last Visit:</strong> August 15, 2024</p>
-                <p><strong>Medications:</strong> Metformin 1000mg, Insulin glargine</p>
-                <p><strong>HbA1c:</strong> 7.2% | <strong>Weight:</strong> 180 lbs (Goal: 150 lbs)</p>
-                <p><strong>Complications:</strong> Early diabetic retinopathy</p>
-              </div>
-            </div>
-
-            <div className="patient-card">
-              <div className="patient-name">Michael Johnson (67, Male)</div>
-              <div className="patient-info">
-                <div className="patient-condition">Heart Failure</div>
-                <div className="patient-condition">Atrial Fibrillation</div>
-                <div className="patient-condition">COPD</div>
-                <p><strong>Last Visit:</strong> September 2, 2024</p>
-                <p><strong>Medications:</strong> Carvedilol, Furosemide, Warfarin</p>
-                <p><strong>EF:</strong> 35% | <strong>O2 Sat:</strong> 92% on room air</p>
-                <p><strong>INR:</strong> 2.4 (Target: 2-3)</p>
-              </div>
-            </div>
-
-            <div className="patient-card">
-              <div className="patient-name">Emily Chen (28, Female)</div>
-              <div className="patient-info">
-                <div className="patient-condition">Asthma</div>
+                <div className="patient-condition">Possible Hyperthyroidism</div>
                 <div className="patient-condition">Anxiety</div>
-                <p><strong>Last Visit:</strong> June 20, 2024</p>
-                <p><strong>Medications:</strong> Fluticasone/Salmeterol, Sertraline 50mg</p>
-                <p><strong>Control:</strong> Good asthma control, stable peak flow</p>
-                <p><strong>Allergies:</strong> Environmental (pollen, dust mites)</p>
+                <p><strong>Medical History:</strong> Reports occasional anxiety, no prior thyroid conditions</p>
+                <p><strong>Last Visit:</strong> June 10, 2025</p>
+                <p><strong>Chief Complaint:</strong> Persistent fatigue, dizziness, weight loss over past 3 weeks</p>
+                <p><strong>Additional Symptoms:</strong> Cold hands, shortness of breath, heart palpitations, hand tremors, and sleep disturbances</p>
+                <p><strong>Physical Exam:</strong></p>
+                <ul>
+                  <li>BP: 100/65 mmHg</li>
+                  <li>Pulse: 108 bpm</li>
+                  <li>Weight: 124 lbs (down from 132 lbs last month)</li>
+                  <li>Temperature: 98.4°F</li>
+                </ul>
+                <p><strong>Assessment:</strong> Possible hyperthyroidism or other endocrine disorder suspected</p>
+                <p><strong>Plan:</strong> Ordered thyroid panel (TSH, T3, T4), advised daily hydration and light physical activity</p>
+                <p><strong>Next Follow-up:</strong> June 17, 2025</p>
               </div>
             </div>
 
             <div className="patient-card">
-              <div className="patient-name">Robert Williams (55, Male)</div>
+              <div className="patient-name">Jacob Reed (61, Male)</div>
               <div className="patient-info">
-                <div className="patient-condition">Chronic Kidney Disease</div>
+                <div className="patient-condition">Type 2 Diabetes (diagnosed 2012)</div>
                 <div className="patient-condition">Hypertension</div>
-                <div className="patient-condition">Gout</div>
-                <p><strong>Last Visit:</strong> August 30, 2024</p>
-                <p><strong>Medications:</strong> Losartan 100mg, Allopurinol 300mg</p>
-                <p><strong>Creatinine:</strong> 1.8 mg/dL | <strong>eGFR:</strong> 42 mL/min/1.73m²</p>
-                <p><strong>Uric Acid:</strong> 6.2 mg/dL</p>
+                <div className="patient-condition">Hyperlipidemia</div>
+                <div className="patient-condition">Possible Heart Failure</div>
+                <p><strong>Last Visit:</strong> July 14, 2025</p>
+                <p><strong>Chief Complaint:</strong> Occasional chest discomfort during exertion, leg swelling, increased nighttime urination</p>
+                <p><strong>Current Medications:</strong></p>
+                <ul>
+                  <li>Metformin 1000mg twice daily</li>
+                  <li>Lisinopril 20mg daily</li>
+                  <li>Atorvastatin 40mg nightly</li>
+                </ul>
+                <p><strong>Recent Labs:</strong></p>
+                <ul>
+                  <li>HbA1c: 6.9%</li>
+                  <li>LDL cholesterol: 130 mg/dL</li>
+                  <li>BNP: 180 pg/mL</li>
+                </ul>
+                <p><strong>Physical Exam:</strong></p>
+                <ul>
+                  <li>BP: 135/85 mmHg</li>
+                  <li>Pulse: 82 bpm</li>
+                  <li>Weight: 205 lbs</li>
+                  <li>Ankle edema present bilaterally</li>
+                </ul>
+                <p><strong>ECG:</strong> Shows mild LVH</p>
+                <p><strong>Assessment:</strong> Possible early congestive heart failure, needs further evaluation</p>
+                <p><strong>Plan:</strong> Echocardiogram ordered, sodium-restricted diet advised, referred to cardiology</p>
+                <p><strong>Follow-up:</strong> In 2 weeks</p>
               </div>
             </div>
           </div>

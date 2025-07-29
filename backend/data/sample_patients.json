@@ -1,22 +1,10 @@
 [
     {
-        "id": "patient_001",
-        "content": "John Doe, 45 years old male. Medical history: Hypertension diagnosed 2019. Last visit: July 10, 2024. Blood pressure: 140/90 mmHg. Current medications: Amlodipine 5mg daily, Lisinopril 10mg daily. Allergies: Penicillin. Recent labs: Cholesterol 220 mg/dL, HbA1c 5.8%. Patient reports occasional headaches and fatigue. Recommended lifestyle changes including diet modification and regular exercise. Next appointment scheduled for October 2024."
-    },
-    {
-        "id": "patient_002", 
-        "content": "Sarah Smith, 32 years old female. Medical history: Type 2 Diabetes diagnosed 2020, Obesity (BMI 34). Last visit: August 15, 2024. HbA1c: 7.2%. Current medications: Metformin 1000mg twice daily, Insulin glargine 24 units at bedtime. Blood glucose monitoring 4 times daily. Recent weight: 180 lbs, goal weight 150 lbs. Patient enrolled in diabetes education program. Allergies: None known. Complications: Early diabetic retinopathy noted on last eye exam. Referral to nutritionist completed."
-    },
-    {
-        "id": "patient_003",
-        "content": "Michael Johnson, 67 years old male. Medical history: Chronic heart failure (EF 35%), Atrial fibrillation, COPD. Last visit: September 2, 2024. Current medications: Carvedilol 25mg twice daily, Furosemide 40mg daily, Warfarin 5mg daily (INR target 2-3), Albuterol inhaler as needed. Recent echo shows stable EF. INR last check: 2.4. Oxygen saturation 92% on room air. Patient reports improved exercise tolerance with cardiac rehab. No recent hospitalizations. Smoking cessation counseling ongoing."
-    },
-    {
-        "id": "patient_004",
-        "content": "Emily Chen, 28 years old female. Medical history: Asthma since childhood, Anxiety disorder. Last visit: June 20, 2024. Current medications: Fluticasone/Salmeterol inhaler twice daily, Albuterol rescue inhaler, Sertraline 50mg daily. Recent pulmonary function tests show good control. Peak flow readings stable. Allergies: Environmental allergens (pollen, dust mites). Patient reports good asthma control with current regimen. Anxiety well-managed with current medication and therapy. Annual flu vaccination completed."
-    },
-    {
-        "id": "patient_005",
-        "content": "Robert Williams, 55 years old male. Medical history: Chronic kidney disease stage 3, Hypertension, Gout. Last visit: August 30, 2024. Creatinine: 1.8 mg/dL, eGFR: 42 mL/min/1.73m². Current medications: Losartan 100mg daily, Amlodipine 10mg daily, Allopurinol 300mg daily. Diet counseling provided for low protein, low sodium diet. Recent uric acid level: 6.2 mg/dL. Blood pressure well controlled. Nephrology follow-up scheduled. Patient educated on kidney disease progression and importance of medication compliance."
-    }
+        "id": "patient_006",
+        "content": "Emily Rivera, 29 years old female. Medical history: Reports occasional anxiety, no prior thyroid conditions. Last visit: June 10, 2025. Chief complaint: Persistent fatigue, dizziness, weight loss over past 3 weeks. Additional symptoms: Cold hands, shortness of breath, heart palpitations, hand tremors, and sleep disturbances. Physical exam: BP 100/65 mmHg, Pulse 108 bpm, Weight 124 lbs (down from 132 lbs last month), Temperature 98.4°F. Assessment: Possible hyperthyroidism or other endocrine disorder suspected. Plan: Ordered thyroid panel (TSH, T3, T4), advised daily hydration and light physical activity. Next follow-up scheduled for June 17, 2025."
+      },
+      {
+        "id": "patient_007",
+        "content": "Jacob Reed, 61 years old male. Medical history: Type 2 Diabetes (diagnosed 2012), Hypertension, Hyperlipidemia. Last visit: July 14, 2025. Chief complaint: Occasional chest discomfort during exertion, leg swelling, increased nighttime urination. Current medications: Metformin 1000mg twice daily, Lisinopril 20mg daily, Atorvastatin 40mg nightly. Recent labs: HbA1c 6.9%, LDL cholesterol 130 mg/dL, BNP 180 pg/mL. Physical exam: BP 135/85 mmHg, Pulse 82 bpm, Weight 205 lbs, Ankle edema present bilaterally. ECG shows mild LVH. Assessment: Possible early congestive heart failure, needs further evaluation. Plan: Echocardiogram ordered, sodium-restricted diet advised, referred to cardiology. Follow-up in 2 weeks."
+      }
 ] 
