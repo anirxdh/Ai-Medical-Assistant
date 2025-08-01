@@ -243,3 +243,4 @@ For production deployment:
 ## 📄 License
 
 This project is for educational/demo purposes. Ensure compliance with HIPAA and other medical data regulations before using with real patient data. # Ai-Medical-Assistant
+# Updated Git configuration
